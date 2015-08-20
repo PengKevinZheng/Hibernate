@@ -31,3 +31,35 @@ Limits the number of connections waiting in the Hibernate database connection po
 7.hibernate.connection.autocommit
 
 Allows autocommit mode to be used for the JDBC connection.
+
+Hibernate Util: 
+
+Now a helper class is needed to get Hibernate up and running. This class creates a SessionFactory object which in turn can open up new Session's. A session is a single-threaded unit of work, the SessionFactory is a thread-safe global object instantiated once. For our application the HibernateUtil class is implemented below:
+
+  
+
+          import org.hibernate.SessionFactory;
+          import org.hibernate.cfg.Configuration;
+
+          public class HibernateUtil {
+    
+                private static final SessionFactory sessionFactory;
+
+                static {
+                    try {
+                        // Create the SessionFactory from hibernate.cfg.xml
+                        sessionFactory = new Configuration().configure().buildSessionFactory();
+                    } catch (Throwable ex) {
+                        // Make sure you log the exception, as it might be swallowed
+                        System.err.println("Initial SessionFactory creation failed." + ex);
+                        throw new ExceptionInInitializerError(ex);
+                    }
+                }
+
+                public static SessionFactory getSessionFactory() {
+                    return sessionFactory;
+                }
+
+          }
+          
+Place HibernateUtil.java in a util package next to your main class package(s).
