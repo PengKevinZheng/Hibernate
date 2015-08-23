@@ -32,6 +32,50 @@ Limits the number of connections waiting in the Hibernate database connection po
 
 Allows autocommit mode to be used for the JDBC connection.
 
+8.hibernate.show_sql:
+
+show the sql in console for testing purpose.
+
+9.hibernate.format_sql: 
+
+the sql shown in the console is easy to read if this parameter is true;
+
+10.hibernate.hbm2ddl.auto:
+
+hibernate.hbm2ddl.auto Automatically validates or exports schema DDL to the database when the SessionFactory is created. 
+
+The list of possible options are:
+
+validate: validate the schema, makes no changes to the database.
+
+update: update the schema.
+
+create: creates the schema, destroying previous data.
+
+create-drop: drop the schema at the end of the session.
+
+Note: 
+
+表空间(tablespace)是一个逻辑容器，它和数据文件关联起来，一个表空间至少有一个数据文件与之关联。一个表空间可以有多个段，一个段只能属于一个表空间。
+
+    方案（schema）又叫模式，是比表空间小一级的逻辑概念，它也是一个逻辑容器。多个用户可能共用一个表空间，那如何区分开每一个用户？那么在表空间中对每个用户都有一个对应的方案，用于保存单个用户的信息。
+    
+    oracle中存储的层次结构总结如下：
+    
+一、数据库由一个或多个表空间组成
+
+二、表空间由一个或多个数据文件组成，一个表空间包含多个段(segment)
+
+三、段由一个或多个区(extent)组成
+
+四、区是数据文件中一个连续的分配空间，由一个或多个块(block)组成
+
+五、块是数据库中最小、最基本的单位，是数据库使用的最小的I/O单元
+
+六、每个用户都有一个对应的方案(schema)
+
+
+
 Hibernate Util: 
 
 Now a helper class is needed to get Hibernate up and running. This class creates a SessionFactory object which in turn can open up new Session's. A session is a single-threaded unit of work, the SessionFactory is a thread-safe global object instantiated once. For our application the HibernateUtil class is implemented below:
@@ -63,3 +107,5 @@ Now a helper class is needed to get Hibernate up and running. This class creates
           }
           
 Place HibernateUtil.java in a util package next to your main class package(s).
+
+
