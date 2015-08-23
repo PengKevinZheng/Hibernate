@@ -109,3 +109,37 @@ Now a helper class is needed to get Hibernate up and running. This class creates
 Place HibernateUtil.java in a util package next to your main class package(s).
 
 
+Session:
+
+to create a session, we have two methods: 
+
+1.sessionFactory.openSession();
+
+2.sessionFacotry.getCurrentSession();
+
+Difference:
+
+1. using the getCurrentSession () requires in hibernate.cfg.xml file add the following configuration: 
+ 
+* If you are using a local transaction (jdbc Affairs) 
+
+<property name="hibernate.current_session_context_class"> thread </ property> 
+
+* If you are using the global transaction (JTA transaction) 
+
+<property name="hibernate.current_session_context_class"> jta </ property>
+
+2.  Session.openSession():it creates a new session(for new session) ;
+    Session.getCurrentSession(): return the existing session; 
+    采用getCurrentSession()创建的session会绑定到当前线程中，而采用openSession()
+创建的session则不会
+
+3. 采用getCurrentSession()创建的session在commit或rollback时会自动关闭，而采用openSession()
+创建的session必须手动关闭
+ 
+  
+
+
+
+
+
